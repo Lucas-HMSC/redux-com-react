@@ -8,81 +8,36 @@
   <script src="redux.min.js"></script>
 </head>
 <body>
-  <div>
-    <h1>Total: <span id="total"></span></h1>
-    <button id="button">
-      Incrementar
-    </button>
-    <button id="abrir">
-      Abrir
-    </button>
-    <button id="fechar">
-      Fechar
-    </button>
+  <div id="caixa" style="background: blue; height: 50px;">
+    
   </div>
-
   <script>
-    // Constantes
-    const INCREMENTAR = 'INCREMENTAR';
-    const SOMAR = 'SOMAR';
-
-    // Action Creator
-    function incrementar() {
-      return { type: INCREMENTAR };
-    }
-    function somar(payload) {
-      return { type: SOMAR, payload };
-    }
-
-    const initialState = 0;
-
-    function contador(state = initialState, action) {
+    function reducer(state = 0, action) {
       switch (action.type) {
-        case INCREMENTAR: 
-          return state + 1;
-        case SOMAR:
-          return state + action.payload;
+        case 'MODIFICAR_WIDTH':
+          
+          return action.payload;
         default:
           return state;
       }
     }
 
-    function modal(state = false, action) {
-      switch (action.type) {
-        case 'ABRIR': 
-          return true;
-        case 'FECHAR':
-          return false;
-        default:
-          return state;
-      }
-    }
-
-    const reducer = Redux.combineReducers({ contador, modal });
-
-    const store = Redux.createStore(reducer);
-
+    const store = Redux.createStore(
+      reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+    
     function render() {
-      const { contador, modal } = store.getState();
-      const total = document.getElementById('total');
-      total.innerText = contador;
-      if (modal) {
-        total.style.display = 'inline-block';
-      } else {
-        total.style.display = 'none';
-      }
+      const caixa = document.getElementById('caixa');
+      caixa.style.width = store.getState() + 'px';
     }
-    render();
-
+    
     store.subscribe(render);
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 100 });
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 150 });
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 200 });
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 250 });
 
-    const button = document.getElementById('button');
-    button.addEventListener('click', () => store.dispatch(incrementar()));
-
-    const abrir = document.getElementById('abrir');
-    const fechar = document.getElementById('fechar');
-    abrir.addEventListener('click', () => store.dispatch({ type: 'ABRIR' }));
-    fechar.addEventListener('click', () => store.dispatch({ type: 'FECHAR' }));
   </script>
 </body>
 </html>
