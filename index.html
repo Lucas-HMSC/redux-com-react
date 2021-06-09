@@ -5,38 +5,51 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redux</title>
+  <script src="immer.umd.production.min.js"></script>
   <script src="redux.min.js"></script>
 </head>
 <body>
-  <div id="caixa" style="background: blue; height: 50px;">
-    
-  </div>
+
   <script>
-    function reducer(state = 0, action) {
-      switch (action.type) {
-        case 'MODIFICAR_WIDTH':
-          
-          return action.payload;
-        default:
-          return state;
-      }
+    const obj1 = {
+      nome: 'Lucas',
+      idade: 22
     }
+
+    const obj2 = immer.produce(obj1, (draft) => {
+      draft.idade = 35;
+    });
+
+    //console.log(obj2);
+    //console.log(obj1);
+
+    const initialState = {
+      nome: 'Lucas',
+      idade: 22
+    }
+
+    const reducer = immer.produce((state, action) => {
+      switch (action.type) {
+        case 'MUDAR_NOME':
+          state.nome = action.payload;
+          break;
+        case 'MUDAR_IDADE':
+          state.idade = action.payload;
+          break;
+
+      }
+    }, initialState);
 
     const store = Redux.createStore(
       reducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     );
-    
-    function render() {
-      const caixa = document.getElementById('caixa');
-      caixa.style.width = store.getState() + 'px';
-    }
-    
-    store.subscribe(render);
-    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 100 });
-    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 150 });
-    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 200 });
-    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 250 });
+
+    store.dispatch({ type: 'MUDAR_NOME', payload: 'André' });
+    store.dispatch({ type: 'MUDAR_NOME', payload: 'João' });
+    store.dispatch({ type: 'MUDAR_NOME', payload: 'Pedro' });
+    store.dispatch({ type: 'MUDAR_IDADE', payload: 20 });
+    store.dispatch({ type: 'MUDAR_IDADE', payload: 32 });
 
   </script>
 </body>
