@@ -5,47 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redux</title>
-  <script src="../immer.umd.production.min.js"></script>
   <script src="../redux.min.js"></script>
 </head>
 <body>
 
-  <h1 id="aulas"></h1>
-  <h1 id="aluno"></h1>
+  <ul>
+    <li id="item1" data-slide="1">Item 1</li>
+    <li id="item2" data-slide="2">Item 2</li>
+    <li id="item3" data-slide="3">Item 3</li>
+    <li id="item4" data-slide="4">Item 4</li>
+  </ul>
 
-  <script type="module">
-    import store from './store/configureStore.js';
-    import {
-      incrementarTempo,
-      reduzirTempo,
-      modificarEmail
-    } from './store/aluno.js';
-    import {
-      completarAula,
-      completarCurso,
-      resetarCurso
-    } from './store/aulas.js';
-
-    function render() {
-      const { aulas, aluno } = store.getState();
-      const aulasEl = document.getElementById('aulas');
-      const alunoEl = document.getElementById('aluno');
-
-      alunoEl.innerText = `${ aluno.nome } : ${ aluno.email } : ${ aluno.diasRestantes }`;
-      aulasEl.innerText = aulas.filter((aula) => aula.completa === true).length;
-    }
-    render();
-    store.subscribe(render);
-
-    store.dispatch(incrementarTempo());
-    store.dispatch(incrementarTempo());
-    store.dispatch(reduzirTempo());
-    store.dispatch(modificarEmail('lucashms.carvalgo@origamid.com'));
-    store.dispatch(completarAula(2));
-    store.dispatch(completarAula(3));
-    store.dispatch(completarAula(4));
-    store.dispatch(resetarCurso());
-    store.dispatch(completarCurso());
-  </script>
+  <script src="./script-currying.js"></script>
 </body>
 </html>
