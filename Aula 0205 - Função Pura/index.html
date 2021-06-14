@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redux</title>
+  <script src="../Redux/redux.min.js"></script>
+</head>
+<body>
+  <div id="caixa" style="background: blue; height: 50px;">
+    
+  </div>
+  <script>
+    function reducer(state = 0, action) {
+      switch (action.type) {
+        case 'MODIFICAR_WIDTH':
+          
+          return action.payload;
+        default:
+          return state;
+      }
+    }
+
+    const store = Redux.createStore(
+      reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+    
+    function render() {
+      const caixa = document.getElementById('caixa');
+      caixa.style.width = store.getState() + 'px';
+    }
+    
+    store.subscribe(render);
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 100 });
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 150 });
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 200 });
+    store.dispatch({ type: 'MODIFICAR_WIDTH', payload: 250 });
+
+  </script>
+</body>
+</html>
