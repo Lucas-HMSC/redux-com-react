@@ -1,17 +1,24 @@
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-function App() {
-  const state = useSelector(state => state);
-  const dispatch = useDispatch();
+const incrementar = () => ({ type: 'INCREMENTAR' });
 
+function App({ contador, incrementar }) {
   return (
     <div>
-      <h1>Total: { state }</h1>
-      <button onClick={() => dispatch({ type: 'INCREMENTAR' })}>
-        Incrementar
-      </button>
+      <h1>Total: { contador }</h1>
+      <button onClick={incrementar}>Incrementar</button>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    contador: state
+  }
+}
+
+const mapDispatchToProps = {
+  incrementar
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
