@@ -7,3 +7,16 @@ body {
   max-width: 300px;
   margin: 0 auto;
 }
+
+.anime {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: anime .3s forwards;
+}
+
+@keyframes anime {
+  to {
+    transform: initial;
+    opacity: 1;
+  }
+}
